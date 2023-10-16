@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+public class NumberGuessingGame {
+    public static void main(String[] args) {
+        int maxAttempts = 5;
+        int computerNumber = generateRandomNumber(1, 100);
+
+        System.out.println("Welcome to the Number Guessing Game!");
+        System.out.println("You have a maximum of " + maxAttempts + " attempts.");
+
+        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+            int userGuessNumber = getUserInput();
+
+            if (userGuessNumber == computerNumber) {
+                System.out.println("Congratulations! Your guess is correct. You win!");
+                break;
+            } else if (userGuessNumber < computerNumber) {
+                System.out.println("Your guess is smaller.");
+            } else {
+                System.out.println("Your guess is greater.");
+            }
+
+            if (attempt == maxAttempts) {
+                System.out.println("Sorry, you've exceeded the maximum number of attempts. The correct number was: " + computerNumber);
+            }
+        }
+    }
+
+    public static int generateRandomNumber(int min, int max) {
+        return (int) (Math.random() * (max - min + 1) + min);
+    }
+
+    public static int getUserInput() {
+        Scanner userInput = new Scanner(System.in);
+        int userGuessNumber;
+
+        while (true) {
+            System.out.print("Enter a guess number between 1 and 100: ");
+            if (userInput.hasNextInt()) {
+                userGuessNumber = userInput.nextInt();
+                if (userGuessNumber >= 1 && userGuessNumber <= 100) {
+                    return userGuessNumber;
+                } else {
+                    System.out.println("Please enter a number between 1 and 100.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a valid integer.");
+                userInput.next(); // Clear the invalid input from the scanner
+            }
+        }
+    }
+}
